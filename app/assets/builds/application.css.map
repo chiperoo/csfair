@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../javascript/style.css"],
+  "sourcesContent": [".App {\n    font-family: Oately-BoldDisplay;\n    text-align: center;\n}"],
+  "mappings": ";AAAA;AACI;AACA;AAAA;",
+  "names": []
+}
