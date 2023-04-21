@@ -4,6 +4,7 @@ class ProfessionsService
   include Singleton
 
   @professions_hash
+  FILE_PATH = "professions.json"
 
   def add(profession)
     p = Profession.new(profession)
@@ -13,6 +14,8 @@ class ProfessionsService
     else
       professions_hash[p.title] = 1
     end
+
+    save
   end
 
   def display
@@ -22,6 +25,10 @@ class ProfessionsService
   end
 
   def display_cloud
+    load_data
+
+    display
+
     words = []
     professions_hash.each_pair do |k, v|
       words << [k, v]
@@ -30,6 +37,19 @@ class ProfessionsService
     cloud = MagicCloud::Cloud.new(words, rotate: :free, scale: :log)
     img = cloud.draw(960, 600) #default height/width
     img.write('test.png')
+  end
+
+  def save
+    File.open(FILE_PATH, "w+") do |f|
+      f << professions_hash.to_json
+    end
+  end
+
+  def load_data
+    @professions_hash = nil
+    File.open(FILE_PATH) do |f|
+      @professions_hash = JSON.parse(f.read)
+    end
   end
 
   private
