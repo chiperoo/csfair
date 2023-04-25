@@ -1,4 +1,66 @@
 .App {
+    display: flex;
     font-family: Oately-BoldDisplay;
     text-align: center;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 20%;
 }
+
+h1 {
+    order: 1;
+    flex: 1 0 100%;
+}
+
+input {
+    order: 2;
+    box-sizing: border-box;
+    margin-right: 3%;
+    margin-left: 35%;
+    height: 40px;
+    border: 1px solid #d9dce1;
+    border-radius: 4px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.4;
+    font-family: Oately-Regular;
+    outline: 0;
+    color: #303640;
+    padding: 8px;
+    width: 30%;
+}
+
+input:hover:not(:disabled) {
+    border-color: #A9ADB5;
+}
+
+button {
+    display: flex;
+    flex-basis: 5%;
+    order: 3;
+    background: #62B5ED;
+    border: 1px solid #62B5ED;
+    color: #EFEFEF;
+    box-sizing: border-box;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Oately-Bold;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    line-height: 1.4;
+    margin: 0;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 11px 20px;
+    position: relative;
+    width: auto;
+}
+
+button:hover {
+     background-color: #75c0ff;;
+     border-color: #75c0ff;;
+     color: #EFEFEF;
+ }
+
