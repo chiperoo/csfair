@@ -20,7 +20,7 @@ class ProfessionsService
 
   def display
     professions_hash.each_key do |key|
-      p "#{key} #{professions_hash[key]}"
+      p "#{key}: #{professions_hash[key]}"
     end
   end
 
@@ -29,13 +29,24 @@ class ProfessionsService
 
     display
 
-    words = []
+    # colors of the word cloud
+    colors = %w[#39B6E9 #303640 #EC5453 #37B375 #645187 #B8B24F #243F69 #1A2C47]
+
+    # have default words here for display already
+    words = [
+      ['engineer', 1],
+      ['designer', 2],
+      ['teacher', 3],
+      ['product manager', 2],
+      ['musician', 1]
+
+    ]
     professions_hash.each_pair do |k, v|
       words << [k, v]
     end
 
-    cloud = MagicCloud::Cloud.new(words, rotate: :free, scale: :log)
-    img = cloud.draw(960, 600) #default height/width
+    cloud = MagicCloud::Cloud.new(words, rotate: :square, scale: :linear, palette: colors, font_family: 'Impact')
+    img = cloud.draw(900.0, 500.0) #width, height
     img.write('test.png')
   end
 
