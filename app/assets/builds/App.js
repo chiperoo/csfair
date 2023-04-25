@@ -1096,7 +1096,7 @@
             var dispatcher = resolveDispatcher();
             return dispatcher.useRef(initialValue);
           }
-          function useEffect(create, deps) {
+          function useEffect2(create, deps) {
             var dispatcher = resolveDispatcher();
             return dispatcher.useEffect(create, deps);
           }
@@ -1878,7 +1878,7 @@
           exports.useContext = useContext;
           exports.useDebugValue = useDebugValue;
           exports.useDeferredValue = useDeferredValue;
-          exports.useEffect = useEffect;
+          exports.useEffect = useEffect2;
           exports.useId = useId;
           exports.useImperativeHandle = useImperativeHandle;
           exports.useInsertionEffect = useInsertionEffect;
@@ -2385,10 +2385,11 @@
     ctx.fill();
     ctx.stroke();
   };
-  var MyConfetti = ({ hidden = false }) => {
+  var MyConfetti = ({ hidden = true }) => {
     return /* @__PURE__ */ import_react.default.createElement("div", { role: "presentation", "aria-hidden": true }, /* @__PURE__ */ import_react.default.createElement(
       import_react_confetti.default,
       {
+        numberOfPieces: 2e3,
         initialVelocityX: { min: -1, max: 1 },
         initialVelocityY: { min: -10, max: 10 },
         recycle: false,
@@ -2401,13 +2402,32 @@
   };
   function App() {
     const [hidden, setHidden] = (0, import_react.useState)(true);
-    const onSubmit = () => setHidden();
-    const enterSubmission = (event) => {
-      if (event.key === "Enter") {
-        setHidden();
-      }
+    const [img, setImg] = (0, import_react.useState)("");
+    const [submissionValue, setSubmissionValue] = (0, import_react.useState)("");
+    const onSubmit = async () => {
+      setHidden(false);
+      await fetch("profession/submit", {
+        method: "POST",
+        // or 'PUT'
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          profession: submissionValue
+        })
+      });
+      const wordCloudResponse = await fetch("profession/word_cloud", {
+        method: "GET"
+      });
+      const imageBlob = await wordCloudResponse.blob();
+      const imageObjectURL = URL.createObjectURL(imageBlob);
+      setImg(imageObjectURL);
+      window.open(imageObjectURL, "_blank", "height=500,width=500");
+      setTimeout(function() {
+        window.location.reload();
+      }, 4500);
     };
-    return /* @__PURE__ */ import_react.default.createElement("div", { className: "App" }, /* @__PURE__ */ import_react.default.createElement("h1", null, "When I grow up, I want to be"), /* @__PURE__ */ import_react.default.createElement("input", { onKeyUp: enterSubmission, type: "text" }), /* @__PURE__ */ import_react.default.createElement("button", { onClick: onSubmit }, "submit"), /* @__PURE__ */ import_react.default.createElement(MyConfetti, { hidden }));
+    return /* @__PURE__ */ import_react.default.createElement("div", { className: "App" }, /* @__PURE__ */ import_react.default.createElement("h1", null, "When I grow up, I want to be a/an"), /* @__PURE__ */ import_react.default.createElement("input", { onChange: (event) => setSubmissionValue(event.target.value), type: "text" }), /* @__PURE__ */ import_react.default.createElement("button", { onClick: onSubmit }, "submit"), /* @__PURE__ */ import_react.default.createElement(MyConfetti, { hidden }));
   }
 })();
 /*! Bundled license information:
