@@ -8,7 +8,7 @@ class HomeController < ApplicationController
     profession = params[:profession]
     ProfessionsService.instance.add(profession)
 
-    render plain: "OK"
+    render json: { response: "you submitted #{params[:profession]}" }
   end
 
   def word_cloud
